@@ -7,10 +7,13 @@ import { Results } from '../components/Results';
 import { newQuiz } from '../data/quiz';
 import { images } from '../data/images';
 import { colors, shared } from '../theme';
+import { Reveal } from '../components/Motion';
+import { useCompactLayout } from '../hooks/useCompactLayout';
 import { useAppState } from '../state/AppState';
 export function QuizScreen({
   navigation,
 }: BottomTabScreenProps<TabParams, 'Quiz'>) {
+  const { narrow } = useCompactLayout();
   const [session, setSession] = useState(newQuiz);
   const [phase, setPhase] = useState<'intro' | 'playing' | 'result'>('intro');
   const [index, setIndex] = useState(0);
@@ -64,7 +67,7 @@ export function QuizScreen({
     );
   if (phase === 'result')
     return (
-      <Screen>
+      <Screen motionKey="quiz-result">
         <Text style={shared.title}>Quiz Complete</Text>
         <Results
           score={score}
@@ -86,7 +89,7 @@ export function QuizScreen({
       </Screen>
     );
   return (
-    <Screen>
+    <Screen motionKey={`question-${index}`}>
       <View style={shared.row}>
         <Text style={[shared.body, styles.grow]}>Question</Text>
         <Text style={[shared.heading, shared.cyan]}>{index + 1}/10</Text>
@@ -112,6 +115,7 @@ export function QuizScreen({
               style={[
                 shared.card,
                 styles.option,
+                narrow && styles.stackedOption,
                 selected === option.id && !confirmed && styles.selected,
                 correct && styles.correct,
                 wrong && styles.wrong,
@@ -126,9 +130,9 @@ export function QuizScreen({
           );
         })}
         {confirmed && (
-          <View style={shared.card}>
+          <Reveal style={shared.card}>
             <Text style={shared.body}>{q.explanation}</Text>
-          </View>
+          </Reveal>
         )}
         <Button
           title={confirmed ? (index === 9 ? 'See Results' : 'Next') : 'Confirm'}
@@ -151,6 +155,7 @@ const styles = StyleSheet.create({
   fill: { height: 4, backgroundColor: colors.cyan, borderRadius: 3 },
   question: { fontSize: 25, lineHeight: 32 },
   option: { minHeight: 58, flexDirection: 'row', alignItems: 'center', gap: 8 },
+  stackedOption: { flexDirection: 'column', alignItems: 'stretch' },
   optionText: { color: colors.text, flex: 1 },
   selected: { backgroundColor: '#645078', borderColor: colors.purple },
   correct: { backgroundColor: '#30444D', borderColor: colors.cyan },

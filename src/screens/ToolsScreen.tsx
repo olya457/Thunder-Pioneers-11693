@@ -4,8 +4,11 @@ import { useIsFocused } from '@react-navigation/native';
 import { Button, Screen } from '../components/UI';
 import { colors, shared } from '../theme';
 import { distanceResult } from '../utils/science';
+import { EnergyPulse, Reveal } from '../components/Motion';
+import { useCompactLayout } from '../hooks/useCompactLayout';
 import { useSoundMeter } from '../hooks/useSoundMeter';
 export function ToolsScreen() {
+  const { narrow } = useCompactLayout();
   const [tab, setTab] = useState<'distance' | 'sound'>('distance');
   const [running, setRunning] = useState(false);
   const [seconds, setSeconds] = useState(0);
@@ -48,8 +51,11 @@ export function ToolsScreen() {
     setSeconds(0);
   };
   return (
-    <Screen>
-      <Text style={shared.title}>Storm Tools</Text>
+    <Screen motionKey={tab}>
+      <View style={styles.headingRow}>
+        <Text style={[shared.title, styles.heading]}>Storm Tools</Text>
+        <EnergyPulse active={running || measuring} />
+      </View>
       <View style={styles.tabs}>
         {(['distance', 'sound'] as const).map(value => (
           <Pressable
@@ -87,7 +93,7 @@ export function ToolsScreen() {
               finished ? `Approx. ${(seconds * 0.343).toFixed(1)} km` : '— km'
             }
           />
-          <View style={shared.row}>
+          <View style={[shared.row, narrow && styles.stackedActions]}>
             <Button
               title="Start"
               disabled={running}
@@ -116,10 +122,10 @@ export function ToolsScreen() {
             Distance is approximate and does not indicate a safe location.
           </Text>
           {finished && (
-            <View style={shared.gap}>
+            <Reveal style={shared.gap}>
               <Text style={shared.heading}>{result.title}</Text>
               <Text style={shared.body}>{result.text}</Text>
-            </View>
+            </Reveal>
           )}
         </View>
       ) : (
@@ -133,7 +139,7 @@ export function ToolsScreen() {
             label="Peak reading"
             value={peak === null ? '— dBFS' : `${peak} dBFS`}
           />
-          <View style={shared.row}>
+          <View style={[shared.row, narrow && styles.stackedActions]}>
             <Button
               title={
                 measuring && current === null ? 'Starting…' : 'Start Measuring'
@@ -183,6 +189,14 @@ function Metric({
   );
 }
 const styles = StyleSheet.create({
+  headingRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    marginBottom: 22,
+  },
+  heading: { flex: 1, marginBottom: 0 },
+  stackedActions: { flexDirection: 'column', alignItems: 'stretch' },
   tabs: {
     flexDirection: 'row',
     borderWidth: 1,

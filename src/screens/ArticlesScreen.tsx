@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, Image, StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
@@ -40,7 +40,14 @@ export function ArticlesScreen({
         )}
         ListEmptyComponent={
           <View style={styles.empty}>
-            <Image source={images.favorites} style={styles.emptyImage} />
+            <View style={styles.emptyImage}>
+              <ContentImage
+                source={images.favorites}
+                aspectRatio={1}
+                resizeMode="contain"
+                borderRadius={8}
+              />
+            </View>
             <Text style={[shared.heading, shared.center]}>
               No Saved Articles Yet
             </Text>
@@ -111,7 +118,6 @@ const styles = StyleSheet.create({
   empty: { gap: 20, paddingVertical: 30 },
   emptyImage: {
     width: '85%',
-    aspectRatio: 1,
     alignSelf: 'center',
     borderRadius: 8,
     marginBottom: 32,

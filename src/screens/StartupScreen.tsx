@@ -6,15 +6,15 @@ import {
   StyleSheet,
   Text,
   View,
-  useWindowDimensions,
 } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button, Screen } from '../components/UI';
 import { images } from '../data/images';
 import { colors, shared } from '../theme';
+import { useCompactLayout } from '../hooks/useCompactLayout';
 import { useAppState } from '../state/AppState';
-const html = `<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><style>html,body{margin:0;background:transparent;overflow:hidden;width:100%;height:100%}body{display:flex;align-items:center;justify-content:center}.orb{width:14px;height:14px;border-radius:50%;background:#e8a6ed;box-shadow:0 0 12px 5px #c66ad8;animation:pulse 1s ease-in-out infinite}@keyframes pulse{0%,100%{transform:scale(.6);opacity:.4}50%{transform:scale(1.2);opacity:1}}</style></head><body><div class="orb"></div><script>setTimeout(()=>window.ReactNativeWebView.postMessage('finished'),4000)</script></body></html>`;
+const html = `<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><style>html,body{margin:0;background:transparent;overflow:hidden;width:100%;height:100%}body{display:flex;align-items:center;justify-content:center}.orb{width:14px;height:14px;border-radius:50%;background:#e8a6ed;box-shadow:0 0 12px 5px #c66ad8;animation:pulse 1s ease-in-out infinite}@media(prefers-reduced-motion:reduce){.orb{animation:none}}@keyframes pulse{0%,100%{transform:scale(.6);opacity:.4}50%{transform:scale(1.2);opacity:1}}</style></head><body><div class="orb"></div><script>setTimeout(()=>window.ReactNativeWebView.postMessage('finished'),4000)</script></body></html>`;
 export function SplashScreen({ onDone }: { onDone: () => void }) {
   const completed = useRef(false);
   const callback = useRef(onDone);
@@ -81,10 +81,11 @@ const slides = [
 export function OnboardingScreen() {
   const [step, setStep] = useState(0);
   const { completeOnboarding } = useAppState();
-  const { height, width } = useWindowDimensions();
+  const { height, width, horizontal, compact } = useCompactLayout();
   const slide = slides[step];
   return (
     <Screen
+      motionKey={step}
       bottomSafe
       style={styles.onboard}
       footer={
@@ -126,11 +127,22 @@ export function OnboardingScreen() {
         style={[
           styles.art,
           {
-            height: Math.min((Math.min(width, 620) - 40) / 1.1, height * 0.36),
+            height: Math.min(
+              Math.min(width, 620) - horizontal * 2,
+              height * (compact ? 0.3 : 0.36),
+            ),
           },
         ]}
       />
-      <Text style={[shared.title, styles.slideTitle]}>{slide.title}</Text>
+      <Text
+        style={[
+          shared.title,
+          styles.slideTitle,
+          compact && styles.compactTitle,
+        ]}
+      >
+        {slide.title}
+      </Text>
       <Text style={shared.body}>{slide.text}</Text>
     </Screen>
   );
@@ -149,6 +161,7 @@ const styles = StyleSheet.create({
   skipRow: { height: 38, alignItems: 'flex-end', marginBottom: 16 },
   skip: { paddingHorizontal: 12, paddingVertical: 4 },
   art: { width: '100%', borderRadius: 4 },
+  compactTitle: { fontSize: 25, marginTop: 18 },
   slideTitle: { marginTop: 30, marginBottom: 12 },
   footer: {
     paddingTop: 16,

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
+  Animated,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -9,12 +10,14 @@ import {
   StyleProp,
   Image,
   ImageSourcePropType,
-  useWindowDimensions,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, shared } from '../theme';
 import { Icon, IconName } from './Icon';
+import { MotionScene, useSceneMotion } from './Motion';
+import { useCompactLayout } from '../hooks/useCompactLayout';
+const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 export function Button({
   title,
   onPress,
@@ -28,16 +31,28 @@ export function Button({
   outline?: boolean;
   style?: StyleProp<ViewStyle>;
 }) {
+  const motionEnabled = useSceneMotion();
+  const scale = useRef(new Animated.Value(1)).current;
+  const press = (toValue: number) =>
+    Animated.spring(scale, {
+      toValue: motionEnabled ? toValue : 1,
+      speed: 30,
+      bounciness: 3,
+      useNativeDriver: true,
+    }).start();
   return (
-    <Pressable
+    <AnimatedPressable
+      onPressIn={() => press(0.97)}
+      onPressOut={() => press(1)}
       accessibilityRole="button"
       accessibilityState={{ disabled }}
       onPress={onPress}
       disabled={disabled}
-      style={({ pressed }) => [
+      style={[
         styles.button,
+        { transform: [{ scale }] },
         outline && styles.outline,
-        { opacity: disabled ? 0.4 : pressed ? 0.75 : 1 },
+        disabled && styles.disabledButton,
         style,
       ]}
     >
@@ -53,7 +68,7 @@ export function Button({
       <Text style={outline ? styles.outlineText : styles.buttonText}>
         {title}
       </Text>
-    </Pressable>
+    </AnimatedPressable>
   );
 }
 export function IconButton({
@@ -88,13 +103,20 @@ export function Screen({
   style,
   footer,
   bottomSafe = false,
+  motionKey,
 }: {
   children: React.ReactNode;
   scroll?: boolean;
   style?: StyleProp<ViewStyle>;
   footer?: React.ReactNode;
   bottomSafe?: boolean;
+  motionKey?: string | number;
 }) {
+  const { compact, horizontal } = useCompactLayout();
+  const scrollRef = useRef<ScrollView>(null);
+  useEffect(() => {
+    scrollRef.current?.scrollTo({ y: 0, animated: false });
+  }, [motionKey]);
   return (
     <SafeAreaView
       edges={
@@ -104,23 +126,47 @@ export function Screen({
       }
       style={styles.screen}
     >
-      <View style={styles.brand}>
-        <Text style={styles.brandText}>Thunder Lab</Text>
-      </View>
-      {scroll ? (
-        <ScrollView
-          style={styles.scroll}
-          contentContainerStyle={[styles.content, style]}
-          showsVerticalScrollIndicator={false}
-        >
-          {children}
-        </ScrollView>
-      ) : (
-        <View style={[styles.content, styles.flex, style]}>{children}</View>
-      )}
-      {footer && (
-        <View style={[styles.content, styles.fixedFooter]}>{footer}</View>
-      )}
+      <MotionScene trigger={motionKey}>
+        <View style={[styles.brand, compact && styles.compactBrand]}>
+          <Text style={styles.brandText}>Thunder Lab</Text>
+        </View>
+        {scroll ? (
+          <ScrollView
+            ref={scrollRef}
+            style={styles.scroll}
+            contentContainerStyle={[
+              styles.content,
+              { paddingHorizontal: horizontal },
+              style,
+            ]}
+            showsVerticalScrollIndicator={false}
+          >
+            {children}
+          </ScrollView>
+        ) : (
+          <View
+            style={[
+              styles.content,
+              styles.flex,
+              { paddingHorizontal: horizontal },
+              style,
+            ]}
+          >
+            {children}
+          </View>
+        )}
+        {footer && (
+          <View
+            style={[
+              styles.content,
+              styles.fixedFooter,
+              { paddingHorizontal: horizontal },
+            ]}
+          >
+            {footer}
+          </View>
+        )}
+      </MotionScene>
     </SafeAreaView>
   );
 }
@@ -137,13 +183,18 @@ export function Intro({
   button: string;
   onPress: () => void;
 }) {
-  const { height } = useWindowDimensions();
+  const { height, width, horizontal, compact } = useCompactLayout();
+  const imageSize = Math.min(
+    width - horizontal * 2,
+    height * (compact ? 0.32 : 0.4),
+    400,
+  );
   return (
     <Screen style={styles.intro}>
       <Image
         source={image}
-        style={[styles.hero, { maxHeight: height * 0.42 }]}
-        resizeMode="cover"
+        style={[styles.hero, { width: imageSize, height: imageSize }]}
+        resizeMode="contain"
       />
       <View style={shared.gap}>
         <Text style={[shared.title, styles.introTitle]}>{title}</Text>
@@ -154,6 +205,7 @@ export function Intro({
   );
 }
 const styles = StyleSheet.create({
+  compactBrand: { paddingBottom: 12 },
   introTitle: { marginBottom: 0 },
   screen: { flex: 1, backgroundColor: colors.background },
   brand: {
@@ -173,6 +225,7 @@ const styles = StyleSheet.create({
   flex: { flex: 1 },
   scroll: { flex: 1, minHeight: 0 },
   fixedFooter: { flexShrink: 0, paddingBottom: 12 },
+  disabledButton: { opacity: 0.4 },
   button: {
     borderRadius: 8,
     overflow: 'hidden',
@@ -210,5 +263,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   intro: { flexGrow: 1, justifyContent: 'space-evenly', gap: 28 },
-  hero: { width: '96%', aspectRatio: 1, alignSelf: 'center', borderRadius: 8 },
+  hero: { alignSelf: 'center', borderRadius: 8 },
 });

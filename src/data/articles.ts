@@ -11,7 +11,7 @@ export type Article = {
 export const articles: Article[] = [
   {
     id: 'BenjaminFranklin',
-    image: require('../assets/BenjaminFranklin.png'),
+    image: require('../assets/lab-benjamin-franklin.png'),
     title: 'Lightning Meets Science',
     name: 'Benjamin Franklin',
     period: '1752',
@@ -24,7 +24,7 @@ export const articles: Article[] = [
   },
   {
     id: 'ThomasFrancoisDalibard',
-    image: require('../assets/ThomasFrancoisDalibard.png'),
+    image: require('../assets/lab-thomas-francois-dalibard.png'),
     title: 'Electricity from the Clouds',
     name: 'Thomas-François Dalibard',
     period: '1752',
@@ -37,7 +37,7 @@ export const articles: Article[] = [
   },
   {
     id: 'CharlesAugustinDeCoulomb',
-    image: require('../assets/CharlesAugustinDeCoulomb.png'),
+    image: require('../assets/lab-charles-augustin-de-coulomb.png'),
     title: 'Measuring Electric Force',
     name: 'Charles-Augustin de Coulomb',
     period: '1785',
@@ -50,7 +50,7 @@ export const articles: Article[] = [
   },
   {
     id: 'AlessandroVolta',
-    image: require('../assets/AlessandroVolta.png'),
+    image: require('../assets/lab-alessandro-volta.png'),
     title: 'A Current That Continues',
     name: 'Alessandro Volta',
     period: '1800',
@@ -63,7 +63,7 @@ export const articles: Article[] = [
   },
   {
     id: 'HansChristianOersted',
-    image: require('../assets/HansChristianOersted.png'),
+    image: require('../assets/lab-hans-christian-oersted.png'),
     title: 'The Compass That Turned',
     name: 'Hans Christian Ørsted',
     period: '1820',
@@ -76,7 +76,7 @@ export const articles: Article[] = [
   },
   {
     id: 'AndreMarieAmpere',
-    image: require('../assets/AndreMarieAmpere.png'),
+    image: require('../assets/lab-andre-marie-ampere.png'),
     title: 'When Currents Interact',
     name: 'André-Marie Ampère',
     period: '1820s',
@@ -89,7 +89,7 @@ export const articles: Article[] = [
   },
   {
     id: 'MichaelFaraday',
-    image: require('../assets/MichaelFaraday.png'),
+    image: require('../assets/lab-michael-faraday.png'),
     title: 'Motion Becomes Electricity',
     name: 'Michael Faraday',
     period: '1831',
@@ -102,7 +102,7 @@ export const articles: Article[] = [
   },
   {
     id: 'JosephHenry',
-    image: require('../assets/JosephHenry.png'),
+    image: require('../assets/lab-joseph-henry.png'),
     title: 'The Power of Coils',
     name: 'Joseph Henry',
     period: '1830s',
@@ -115,7 +115,7 @@ export const articles: Article[] = [
   },
   {
     id: 'JamesClerkMaxwell',
-    image: require('../assets/JamesClerkMaxwell.png'),
+    image: require('../assets/lab-james-clerk-maxwell.png'),
     title: 'One Electromagnetic World',
     name: 'James Clerk Maxwell',
     period: '1860s',
@@ -128,7 +128,7 @@ export const articles: Article[] = [
   },
   {
     id: 'NikolaTesla',
-    image: require('../assets/NikolaTesla.png'),
+    image: require('../assets/lab-nikola-tesla.png'),
     title: 'Alternating Current in Motion',
     name: 'Nikola Tesla',
     period: 'Late 1880s',
@@ -141,7 +141,7 @@ export const articles: Article[] = [
   },
   {
     id: 'ThomasEdison',
-    image: require('../assets/ThomasEdison.png'),
+    image: require('../assets/lab-thomas-edison.png'),
     title: 'Electricity Reaches the City',
     name: 'Thomas Edison',
     period: '1882',
@@ -154,7 +154,7 @@ export const articles: Article[] = [
   },
   {
     id: 'GeorgeWestinghouse',
-    image: require('../assets/GeorgeWestinghouse.png'),
+    image: require('../assets/lab-george-westinghouse.png'),
     title: 'Power Beyond the Falls',
     name: 'George Westinghouse',
     period: '1890s',

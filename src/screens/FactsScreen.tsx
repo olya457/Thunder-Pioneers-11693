@@ -10,7 +10,7 @@ export function FactsScreen() {
   const fact = facts[index];
   const artwork = Image.resolveAssetSource(fact.image);
   return (
-    <Screen>
+    <Screen motionKey={index}>
       <Text style={shared.title}>Lightning Facts</Text>
       <View style={styles.counter}>
         <Text style={shared.cyan}>

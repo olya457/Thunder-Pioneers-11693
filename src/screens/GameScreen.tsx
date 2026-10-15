@@ -3,6 +3,7 @@ import {
   AppState,
   Image,
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   View,
@@ -17,6 +18,8 @@ import { gameFacts } from '../data/quiz';
 import { images } from '../data/images';
 import { shuffle } from '../utils/science';
 import { colors, shared } from '../theme';
+import { Reveal } from '../components/Motion';
+import { useCompactLayout } from '../hooks/useCompactLayout';
 import { useAppState } from '../state/AppState';
 function makeRound() {
   const fact = shuffle(gameFacts)[0];
@@ -85,7 +88,9 @@ function FallingRound({
               styles.figure,
               {
                 width: Math.min(96, size.width / 3),
-                left: (size.width / 3) * i,
+                left:
+                  (size.width / 3) * i +
+                  (size.width / 3 - Math.min(96, size.width / 3)) / 2,
                 transform: [{ translateY: y }],
               },
             ]}
@@ -109,6 +114,7 @@ function FallingRound({
 export function GameScreen({
   navigation,
 }: BottomTabScreenProps<TabParams, 'Game'>) {
+  const { compact, narrow } = useCompactLayout();
   const [phase, setPhase] = useState<'intro' | 'playing' | 'result'>('intro');
   const [score, setScore] = useState(0);
   const scoreRef = useRef(0);
@@ -158,7 +164,7 @@ export function GameScreen({
     );
   if (phase === 'result')
     return (
-      <Screen>
+      <Screen motionKey="game-result">
         <Text style={shared.title}>Game Over</Text>
         <Results score={score} attempts={state.game} currentId={attemptId} />
         <View style={styles.actions}>
@@ -175,7 +181,7 @@ export function GameScreen({
       </Screen>
     );
   return (
-    <Screen scroll={false}>
+    <Screen scroll={false} motionKey="game-playing">
       <View style={styles.top}>
         <Text style={[shared.heading, shared.cyan]}>Score: {score}</Text>
         <Pressable
@@ -186,9 +192,19 @@ export function GameScreen({
           <Text style={shared.body}>{paused ? 'Resume' : 'Pause'}</Text>
         </Pressable>
       </View>
-      <View style={shared.card}>
-        <Text style={shared.heading}>{round.fact.text}</Text>
-      </View>
+      <Reveal
+        trigger={roundId}
+        style={[
+          shared.card,
+          compact ? styles.compactFactCard : styles.factCard,
+        ]}
+      >
+        <ScrollView>
+          <Text style={[shared.heading, narrow && styles.compactFact]}>
+            {round.fact.text}
+          </Text>
+        </ScrollView>
+      </Reveal>
       <FallingRound
         key={roundId}
         round={round}
@@ -200,6 +216,9 @@ export function GameScreen({
   );
 }
 const styles = StyleSheet.create({
+  compactFactCard: { maxHeight: 110 },
+  factCard: { maxHeight: 180 },
+  compactFact: { fontSize: 17, lineHeight: 24 },
   top: {
     flexDirection: 'row',
     justifyContent: 'space-between',

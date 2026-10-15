@@ -1,10 +1,10 @@
 export const images = {
-  loader: require('../assets/LOADER1 (1).png'),
-  origins: require('../assets/Slice01.png'),
-  knowledge: require('../assets/Slice02.png'),
-  tools: require('../assets/Slice03.png'),
-  curiosity: require('../assets/Slice04.png'),
-  favorites: require('../assets/Slice01-1.png'),
-  game: require('../assets/Slice02-1.png'),
-  quiz: require('../assets/Slice03-1.png'),
+  loader: require('../assets/lab-storm-splash.png'),
+  origins: require('../assets/lab-discovery-book.png'),
+  knowledge: require('../assets/lab-scientist-quiz.png'),
+  tools: require('../assets/lab-storm-instruments.png'),
+  curiosity: require('../assets/lab-curiosity-journal.png'),
+  favorites: require('../assets/lab-saved-discoveries.png'),
+  game: require('../assets/lab-match-the-mind.png'),
+  quiz: require('../assets/lab-knowledge-challenge.png'),
 };

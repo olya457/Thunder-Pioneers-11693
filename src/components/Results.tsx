@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { Reveal } from './Motion';
 import { Attempt } from '../state/AppState';
 import { colors, shared } from '../theme';
 export function Results({
@@ -15,8 +16,8 @@ export function Results({
 }) {
   return (
     <View style={shared.gap}>
-      <View style={[shared.card, styles.scoreCard]}>
-        <Text style={styles.score}>
+      <Reveal style={[shared.card, styles.scoreCard]}>
+        <Text adjustsFontSizeToFit numberOfLines={1} style={styles.score}>
           {quiz ? `${score}/10` : `Score: ${score}`}
         </Text>
         <Text style={[shared.body, shared.center]}>
@@ -24,10 +25,11 @@ export function Results({
             ? 'Keep exploring the stories behind electricity.'
             : `Best score: ${Math.max(score, ...attempts.map(a => a.score))}`}
         </Text>
-      </View>
+      </Reveal>
       <Text style={[shared.body, styles.label]}>Top 3 Attempts</Text>
       {attempts.slice(0, 3).map((attempt, i) => (
-        <View
+        <Reveal
+          delay={120 + i * 90}
           key={attempt.id}
           style={[
             shared.card,
@@ -43,7 +45,7 @@ export function Results({
             {attempt.score}
             {quiz ? '/10' : ''}
           </Text>
-        </View>
+        </Reveal>
       ))}
     </View>
   );
