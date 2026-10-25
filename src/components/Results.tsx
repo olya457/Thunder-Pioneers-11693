@@ -55,5 +55,5 @@ const styles = StyleSheet.create({
   score: { fontSize: 52, fontWeight: '800', color: colors.cyan },
   label: { fontWeight: '600', marginTop: 4 },
   attempt: { flex: 1, marginLeft: 12 },
-  current: { borderColor: colors.purple },
+  current: { borderColor: colors.primary },
 });

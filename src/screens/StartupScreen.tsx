@@ -14,7 +14,7 @@ import { images } from '../data/images';
 import { colors, shared } from '../theme';
 import { useCompactLayout } from '../hooks/useCompactLayout';
 import { useAppState } from '../state/AppState';
-const html = `<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><style>html,body{margin:0;background:transparent;overflow:hidden;width:100%;height:100%}body{display:flex;align-items:center;justify-content:center}.orb{width:14px;height:14px;border-radius:50%;background:#e8a6ed;box-shadow:0 0 12px 5px #c66ad8;animation:pulse 1s ease-in-out infinite}@media(prefers-reduced-motion:reduce){.orb{animation:none}}@keyframes pulse{0%,100%{transform:scale(.6);opacity:.4}50%{transform:scale(1.2);opacity:1}}</style></head><body><div class="orb"></div><script>setTimeout(()=>window.ReactNativeWebView.postMessage('finished'),4000)</script></body></html>`;
+const html = `<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><style>html,body{margin:0;background:transparent;overflow:hidden;width:100%;height:100%}body{display:flex;align-items:center;justify-content:center}.orb{width:14px;height:14px;border-radius:50%;background:${colors.cyan};box-shadow:0 0 12px 5px ${colors.primary};animation:pulse 1s ease-in-out infinite}@media(prefers-reduced-motion:reduce){.orb{animation:none}}@keyframes pulse{0%,100%{transform:scale(.6);opacity:.4}50%{transform:scale(1.2);opacity:1}}</style></head><body><div class="orb"></div><script>setTimeout(()=>window.ReactNativeWebView.postMessage('finished'),4000)</script></body></html>`;
 export function SplashScreen({ onDone }: { onDone: () => void }) {
   const completed = useRef(false);
   const callback = useRef(onDone);
@@ -50,7 +50,7 @@ export function SplashScreen({ onDone }: { onDone: () => void }) {
           onMessage={e => {
             if (e.nativeEvent.data === 'finished') finish();
           }}
-          accessibilityLabel="Loading Thunder Lab"
+          accessibilityLabel="Loading Spark of Discovery"
         />
       </SafeAreaView>
     </ImageBackground>

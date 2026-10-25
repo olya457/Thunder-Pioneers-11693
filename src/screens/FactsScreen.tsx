@@ -62,7 +62,7 @@ export function FactsScreen() {
 }
 const styles = StyleSheet.create({
   counter: { alignItems: 'flex-end', marginBottom: 12 },
-  card: { gap: 16, borderColor: colors.pink, borderLeftWidth: 3, padding: 18 },
+  card: { gap: 16, borderColor: colors.accent, borderLeftWidth: 3, padding: 18 },
   buttons: { flexDirection: 'row', gap: 10, marginTop: 20 },
   flex: { flex: 1 },
   dots: {

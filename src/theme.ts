@@ -1,14 +1,22 @@
 import { StyleSheet } from 'react-native';
 export const colors = {
-  background: '#26232F',
-  surface: '#363141',
-  border: '#665773',
-  text: '#E5DDEE',
-  muted: '#BCADC8',
-  purple: '#A47AD4',
-  cyan: '#49B9CD',
-  pink: '#D489B8',
-  danger: '#CC718F',
+  background: '#0B4F53',
+  surface: '#126166',
+  border: '#43888B',
+  text: '#F0FFFC',
+  muted: '#BFE2DE',
+  primary: '#76E4D2',
+  cyan: '#8AEDE2',
+  accent: '#F5D58A',
+  danger: '#FFB4B4',
+  buttonStart: '#9AF1DE',
+  buttonEnd: '#64D6C4',
+  buttonText: '#073D40',
+  selected: '#217B7B',
+  correct: '#17694F',
+  wrong: '#683E46',
+  overlay: '#0B4F53EF',
+  motionGlow: '#8AEDE218',
 };
 export const shared = StyleSheet.create({
   title: {

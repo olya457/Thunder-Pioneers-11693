@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
     borderRadius: 120,
     borderWidth: 1,
     borderColor: colors.cyan,
-    backgroundColor: '#49B9CD18',
+    backgroundColor: colors.motionGlow,
   },
   spark: {
     position: 'absolute',
@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
     width: 4,
     height: 4,
     borderRadius: 2,
-    backgroundColor: colors.pink,
+    backgroundColor: colors.accent,
   },
   energy: { height: 28, flexDirection: 'row', gap: 4, alignItems: 'center' },
   activeBar: { opacity: 0.85 },

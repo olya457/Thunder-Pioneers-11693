@@ -59,7 +59,7 @@ export function Button({
       {!outline && (
         <LinearGradient
           pointerEvents="none"
-          colors={['#AF83DB', '#9D73CF']}
+          colors={[colors.buttonStart, colors.buttonEnd]}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
           style={StyleSheet.absoluteFill}
@@ -91,7 +91,7 @@ export function IconButton({
     >
       <Icon
         name={name}
-        color={active ? colors.pink : colors.muted}
+        color={active ? colors.accent : colors.muted}
         filled={active}
       />
     </Pressable>
@@ -128,7 +128,7 @@ export function Screen({
     >
       <MotionScene trigger={motionKey}>
         <View style={[styles.brand, compact && styles.compactBrand]}>
-          <Text style={styles.brandText}>Thunder Lab</Text>
+          <Text style={styles.brandText}>Spark of Discovery</Text>
         </View>
         {scroll ? (
           <ScrollView
@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
   buttonText: {
     fontWeight: '600',
     fontSize: 16,
-    color: '#241E30',
+    color: colors.buttonText,
     textAlign: 'center',
   },
   outlineText: {

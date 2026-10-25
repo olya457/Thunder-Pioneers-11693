@@ -157,9 +157,9 @@ const styles = StyleSheet.create({
   option: { minHeight: 58, flexDirection: 'row', alignItems: 'center', gap: 8 },
   stackedOption: { flexDirection: 'column', alignItems: 'stretch' },
   optionText: { color: colors.text, flex: 1 },
-  selected: { backgroundColor: '#645078', borderColor: colors.purple },
-  correct: { backgroundColor: '#30444D', borderColor: colors.cyan },
-  wrong: { backgroundColor: '#503847', borderColor: colors.danger },
+  selected: { backgroundColor: colors.selected, borderColor: colors.primary },
+  correct: { backgroundColor: colors.correct, borderColor: colors.cyan },
+  wrong: { backgroundColor: colors.wrong, borderColor: colors.danger },
   wrongText: { color: colors.danger },
   actions: { gap: 12, marginTop: 24 },
 });

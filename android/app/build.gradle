@@ -77,9 +77,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.thunder.pioneers"
+    namespace "com.sparkofdiscovery"
     defaultConfig {
-        applicationId "com.thunder.pioneers"
+        applicationId "com.sparkofdiscovery"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

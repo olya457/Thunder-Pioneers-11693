@@ -1,4 +1,4 @@
-package com.thunder.pioneers
+package com.sparkofdiscovery
 
 import android.app.Application
 import com.facebook.react.PackageList
