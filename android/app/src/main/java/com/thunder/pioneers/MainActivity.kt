@@ -1,4 +1,4 @@
-package com.thunderpioneers
+package com.thunder.pioneers
 
 import android.os.Bundle
 import com.facebook.react.ReactActivity
